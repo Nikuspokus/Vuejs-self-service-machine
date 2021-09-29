@@ -79,7 +79,7 @@ const SelfServiceMachine = {
                     total += item.price * item.quantity
                 }
             });
-            return total;
+            return total.toFixed(2);
         }
     }
 }
