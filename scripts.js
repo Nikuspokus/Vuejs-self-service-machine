@@ -15,9 +15,21 @@ const handlingForms = {
 
     data() {
         return {
-            members: window.members
+            members: window.members,
+            newMember : {
+            }
         }
     },
+    methods: {
+        addMember: function() {
+            if (this.newMember.fname && this.newMember.lname && this.newMember.instrument) {
+                this.members.push(this.newMember);
+                this.newMember = {};
+            } else {
+                alert("tous les champs doivent être remplis")
+            }
+        }
+    }
 
 };
 
