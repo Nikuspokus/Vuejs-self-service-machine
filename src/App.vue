@@ -18,7 +18,10 @@
 <script>
 export default {
   name: "App",
-};
+  
+}
+
+// https://opentdb.com/api.php?amount=1&category=20&difficulty=easy
 </script>
 
 <style lang="scss">
