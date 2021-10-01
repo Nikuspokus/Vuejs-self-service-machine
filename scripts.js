@@ -5,14 +5,19 @@ const todosApp = {
     data() {
         return {
             todos: window.todos,
-            newTodo : ""
+            newTodo : {
+                done: false
+            }
         }
     },
     methods: {
         addTodo: function() {
-            if (this.newTodo) {
+            if (this.newTodo.text) {
                 this.todos.push(this.newTodo);
-                this.newTodo = "";
+                this.newTodo = {
+                    done: false
+                };
+                localStorage.setItem("todos", JSON.stringify(this.todos))
             } else {
                 alert("tous les champs doivent être remplis")
             }
@@ -20,8 +25,10 @@ const todosApp = {
         clearTodoList: function() {
             this.todos = []
         }
+    },
+    created() {
+        this.todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : this.todos
     }
-
 };
 
 Vue.createApp(todosApp).mount('#app');
