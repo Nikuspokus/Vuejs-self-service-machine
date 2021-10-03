@@ -1,5 +1,7 @@
 <template>
   <div>
+
+    <ScoreBoard />
     <template v-if="this.question">
       <h1 v-html="this.question"></h1>
       <template v-for="(answer, index) in this.answers" :key="index">
@@ -30,8 +32,12 @@
 </template>
 
 <script>
+  import ScoreBoard from '@/components/ScoreBoard.vue'
 export default {
   name: "App",
+  components: {
+    ScoreBoard
+  },
   data() {
     return {
       chosenAnswer: undefined,
