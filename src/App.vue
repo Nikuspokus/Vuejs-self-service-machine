@@ -17,15 +17,13 @@
         Send
       </button>
 
-      <section v-if="this.answerSubmitted" class="result">
-        <h4 v-if="this.chosenAnswer == this.correctAnswer">
-          &#9989; Congratulations, the answer "{{this.correctAnswer}}" is correct
+      <section class="result" v-if="this.answerSubmitted">
+        <h4 v-if="this.chosenAnswer == this.correctAnswer" 
+        v-html="'&#9989; Congratulations, the answer ' + this.correctAnswer + 'is correct.'">
         </h4>
-        <h4 v-else>
-          &#10060; I'm sorry, you picked the wrong answer. The correct answer is "{{this.correctAnswer}}""
-        </h4>
-        <button class="send" type="button">Next question</button>
-      </section>
+        <h4 v-else v-html="'&#10060;  I\'m sorry, you picked the wrong answer. The correct is ' + this.correctAnswer + '. '"></h4>
+      <button @click="this.getNewQuestion()" class="send" type="button">Next question</button>
+    </section>
 
     </template>
   </div>
@@ -36,11 +34,11 @@ export default {
   name: "App",
   data() {
     return {
-      question: undefined,
-      incorrectAnswers: undefined,
-      correctAnswer: undefined,
       chosenAnswer: undefined,
-      answerSubmitted: false,
+      question: undefined,
+      incorrectAnswers: [],
+      correctAnswer: '',
+      answerSubmitted: false
     };
   },
   computed: {
@@ -49,7 +47,7 @@ export default {
       answers.splice(
         Math.round(Math.random() * answers.length),
         0,
-        this.correctAnswers
+        this.correctAnswer
       );
       return answers;
     },
@@ -61,23 +59,30 @@ export default {
         alert("Pick one of the options");
       } else {
         this.answerSubmitted = true
-        if (this.chosenAnswer == this.correctAnswers) {
+        if (this.chosenAnswer == this.correctAnswer) {
           console.log("You got it right !");
         } else {
           console.log("You got it wrong !");
         }
       }
     },
-  },
+    getNewQuestion() {
 
-  created() {
-    this.axios
+      this.answerSubmitted = false
+      this.chosenAnswer = undefined,
+      this.question = undefined
+      this.axios
       .get("https://opentdb.com/api.php?amount=1&category=20&difficulty=easy")
       .then((response) => {
         this.question = response.data.results[0].question;
         this.incorrectAnswers = response.data.results[0].incorrect_answers;
-        this.correctAnswers = response.data.results[0].correct_answer;
+        this.correctAnswer = response.data.results[0].correct_answer;
       });
+    }
+  },
+
+  created() {
+    this.getNewQuestion()
   },
 };
 </script>
