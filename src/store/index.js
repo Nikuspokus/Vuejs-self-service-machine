@@ -27,3 +27,8 @@ export default createStore({
     // 
   }
 })
+
+// depuis notre composant on appel une action via la methode de propagation dispatch, 
+// cette action charge les données de l'api et appel une mutation via la methode commit, 
+// la mutation va modifier l'état, 
+// une fois l'état modifier les composant qui utilisent l'état vont être mis à jour
