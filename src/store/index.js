@@ -4,23 +4,29 @@ import axios from 'axios'
 export default createStore({
   state: {
     // c'est la données elle-même
-    products: []
+    products: [],
+    productsInBag: []
   },
   mutations: {
     // 
     loadProducts(state, products) {
-      console.log(products);
       state.products = products
+    },
+    addToBag(state, product) {
+      state.productsInBag.push(product)
     }
   },
   actions: {
-    // peut être appelé à partir de n'importe quel composant
     loadProducts({ commit }) {
       axios
       .get('https://fakestoreapi.com/products')
       .then(response => {
         commit('loadProducts', response.data)
       })
+    },
+
+    addToBag({commit}, product) {
+      commit('addToBag', product)      
     }
   },
   modules: {
